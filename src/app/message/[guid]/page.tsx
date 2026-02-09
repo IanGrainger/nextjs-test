@@ -11,7 +11,7 @@ interface Message {
   status: string;
 }
 
-export default function Home() {
+export default function MessagePage() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -76,3 +76,4 @@ export default function Home() {
     </div>
   );
 }
+

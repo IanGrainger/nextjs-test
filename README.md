@@ -1,36 +1,120 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Messages Dashboard
+
+A Next.js TypeScript application displaying a table of messages with delivery status tracking. Built with Tailwind CSS for styling and Vitest for testing.
+
+## Features
+
+- **Message Table**: Displays message data with columns for GUID, From Code, To Code, Correspondent Name, and Status
+- **Status Indicators**: Color-coded status badges (delivered, failed, pending)
+- **Server Data**: Fetches message data from a JSON file in the public directory
+- **Responsive Design**: Built with Tailwind CSS for a modern, responsive UI
+- **Comprehensive Tests**: Full test coverage with Vitest and React Testing Library
+
+## Project Structure
+
+```
+src/
+├── app/
+│   ├── page.tsx          # Main page with message table
+│   ├── page.test.tsx     # Tests for the main page
+│   ├── layout.tsx        # Root layout
+│   └── globals.css       # Global styles
+├── components/
+│   ├── MessageTable.tsx      # Message table component
+│   └── MessageTable.test.tsx # Tests for the component
+public/
+└── data/
+    └── messages.json     # Sample message data
+```
+
+## Data Format
+
+The `public/data/messages.json` file contains an array of message objects:
+
+```json
+[
+  {
+    "guid": "550e8400-e29b-41d4-a716-446655440000",
+    "fromCode": "SENDER001",
+    "toCode": "RECVR001",
+    "correspondentName": "John Smith",
+    "status": "delivered"
+  }
+]
+```
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+
+- Node.js 18+ and npm
+
+### Installation
+
+```bash
+npm install
+```
+
+### Development
+
+Run the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) to view the application.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Testing
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Run the test suite:
 
-## Learn More
+```bash
+npm run test            # Run tests in watch mode
+npm run test:run        # Run tests once
+npm run test:ui         # Run tests with UI
+```
 
-To learn more about Next.js, take a look at the following resources:
+### Build
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Build the application for production:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+npm run build
+npm run start
+```
 
-## Deploy on Vercel
+### Linting
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Check code with ESLint:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+npm run lint
+```
+
+## Available Scripts
+
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run start` - Start production server
+- `npm run test` - Run tests in watch mode
+- `npm run test:run` - Run tests once
+- `npm run test:ui` - Run tests with Vitest UI
+- `npm run lint` - Run ESLint
+
+## Technologies Used
+
+- **Next.js 16** - React framework with App Router
+- **TypeScript** - Type-safe development
+- **Tailwind CSS** - Utility-first CSS framework
+- **Vitest** - Unit testing framework
+- **React Testing Library** - Component testing utilities
+
+## Testing
+
+The project includes comprehensive tests:
+
+- **Homepage Tests**: Verifies table rendering, data loading, error handling, and empty states
+- **MessageTable Component Tests**: Tests table headers, message rows, status badges, and empty state
+
+All 8 tests pass successfully.

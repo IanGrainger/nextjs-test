@@ -1,0 +1,37 @@
+[
+  {
+    "guid": "550e8400-e29b-41d4-a716-446655440000",
+    "fromCode": "SENDER001",
+    "toCode": "RECVR001",
+    "correspondentName": "John Smith",
+    "status": "delivered"
+  },
+  {
+    "guid": "550e8400-e29b-41d4-a716-446655440001",
+    "fromCode": "SENDER002",
+    "toCode": "RECVR002",
+    "correspondentName": "Jane Doe",
+    "status": "failed"
+  },
+  {
+    "guid": "550e8400-e29b-41d4-a716-446655440002",
+    "fromCode": "SENDER001",
+    "toCode": "RECVR003",
+    "correspondentName": "Bob Johnson",
+    "status": "pending"
+  },
+  {
+    "guid": "550e8400-e29b-41d4-a716-446655440003",
+    "fromCode": "SENDER003",
+    "toCode": "RECVR001",
+    "correspondentName": "Alice Williams",
+    "status": "delivered"
+  },
+  {
+    "guid": "550e8400-e29b-41d4-a716-446655440004",
+    "fromCode": "SENDER002",
+    "toCode": "RECVR004",
+    "correspondentName": "Charlie Brown",
+    "status": "failed"
+  }
+]
