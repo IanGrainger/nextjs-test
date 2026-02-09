@@ -1,6 +1,15 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { MessageTable } from '@/components/MessageTable';
+
+// Mock next/navigation router
+const mockPush = vi.fn();
+vi.mock('next/navigation', () => ({
+  useRouter: () => ({
+    push: mockPush,
+  }),
+}));
 
 describe('MessageTable Component', () => {
   const mockMessages = [
@@ -26,6 +35,10 @@ describe('MessageTable Component', () => {
       status: 'pending',
     },
   ];
+
+  beforeEach(() => {
+    mockPush.mockClear();
+  });
 
   it('renders table headers', () => {
     render(<MessageTable messages={mockMessages} />);
@@ -62,6 +75,19 @@ describe('MessageTable Component', () => {
     expect(deliveredBadge).toBeInTheDocument();
     expect(failedBadge).toBeInTheDocument();
     expect(pendingBadge).toBeInTheDocument();
+  });
+
+  it('navigates to message detail when row is clicked', async () => {
+    const user = userEvent.setup();
+    render(<MessageTable messages={mockMessages} />);
+
+    const firstRow = screen.getByText('John Smith').closest('tr');
+    if (firstRow) {
+      await user.click(firstRow);
+      expect(mockPush).toHaveBeenCalledWith(
+        '/message/550e8400-e29b-41d4-a716-446655440000',
+      );
+    }
   });
 
   it('renders empty table with no messages', () => {

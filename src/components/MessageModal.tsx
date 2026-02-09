@@ -13,15 +13,29 @@ interface Message {
 
 interface MessageModalProps {
   message: Message;
+  isIntercepted?: boolean;
 }
 
-export function MessageModal({ message }: MessageModalProps) {
+export function MessageModal({
+  message,
+  isIntercepted = false,
+}: MessageModalProps) {
   const router = useRouter();
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     setMounted(true);
   }, []);
+
+  if (!mounted) return null;
+
+  const handleClose = () => {
+    if (isIntercepted) {
+      router.back();
+    } else {
+      router.push('/');
+    }
+  };
 
   if (!mounted) return null;
 
@@ -41,7 +55,7 @@ export function MessageModal({ message }: MessageModalProps) {
   return (
     <div
       className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4"
-      onClick={() => router.back()}
+      onClick={handleClose}
     >
       <div
         className="w-full max-w-md rounded-lg bg-white shadow-lg dark:bg-zinc-900"
@@ -105,7 +119,7 @@ export function MessageModal({ message }: MessageModalProps) {
 
         <div className="border-t border-slate-200 px-6 py-3 dark:border-zinc-700">
           <button
-            onClick={() => router.back()}
+            onClick={handleClose}
             className="w-full rounded-md bg-slate-100 px-4 py-2 text-sm font-medium text-slate-700 transition-colors hover:bg-slate-200 dark:bg-zinc-800 dark:text-slate-300 dark:hover:bg-zinc-700"
           >
             Close

@@ -2,6 +2,13 @@ import { describe, it, expect, beforeEach, vi, afterEach, Mock } from 'vitest';
 import { render, screen, waitFor } from '@testing-library/react';
 import Home from '@/app/page';
 
+// Mock next/navigation
+vi.mock('next/navigation', () => ({
+  useRouter: () => ({
+    push: vi.fn(),
+  }),
+}));
+
 describe('Home Page', () => {
   beforeEach(() => {
     global.fetch = vi.fn();

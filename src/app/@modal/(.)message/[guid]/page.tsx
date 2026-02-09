@@ -36,5 +36,5 @@ export default async function MessageModalPage({
     return null;
   }
 
-  return <MessageModal message={message} />;
+  return <MessageModal message={message} isIntercepted={true} />;
 }

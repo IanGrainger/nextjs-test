@@ -1,4 +1,6 @@
-import Link from 'next/link';
+'use client';
+
+import { useRouter } from 'next/navigation';
 
 interface Message {
   guid: string;
@@ -13,6 +15,8 @@ interface MessageTableProps {
 }
 
 export function MessageTable({ messages }: MessageTableProps) {
+  const router = useRouter();
+
   const getStatusColor = (status: string) => {
     switch (status.toLowerCase()) {
       case 'delivered':
@@ -52,48 +56,27 @@ export function MessageTable({ messages }: MessageTableProps) {
           {messages.map((message) => (
             <tr
               key={message.guid}
+              onClick={() => router.push(`/message/${message.guid}`)}
               className="border-b border-slate-200 hover:bg-slate-50 dark:border-zinc-700 dark:hover:bg-zinc-800/50 transition-colors cursor-pointer"
             >
               <td className="border border-slate-200 px-4 py-3 text-sm font-mono text-slate-700 dark:border-zinc-700 dark:text-slate-300">
-                <Link
-                  href={`/message/${message.guid}`}
-                  className="hover:text-blue-600 dark:hover:text-blue-400 underline"
-                >
-                  {message.guid}
-                </Link>
+                {message.guid}
               </td>
               <td className="border border-slate-200 px-4 py-3 text-sm text-slate-700 dark:border-zinc-700 dark:text-slate-300">
-                <Link
-                  href={`/message/${message.guid}`}
-                  className="hover:text-blue-600 dark:hover:text-blue-400"
-                >
-                  {message.fromCode}
-                </Link>
+                {message.fromCode}
               </td>
               <td className="border border-slate-200 px-4 py-3 text-sm text-slate-700 dark:border-zinc-700 dark:text-slate-300">
-                <Link
-                  href={`/message/${message.guid}`}
-                  className="hover:text-blue-600 dark:hover:text-blue-400"
-                >
-                  {message.toCode}
-                </Link>
+                {message.toCode}
               </td>
               <td className="border border-slate-200 px-4 py-3 text-sm text-slate-700 dark:border-zinc-700 dark:text-slate-300">
-                <Link
-                  href={`/message/${message.guid}`}
-                  className="hover:text-blue-600 dark:hover:text-blue-400"
-                >
-                  {message.correspondentName}
-                </Link>
+                {message.correspondentName}
               </td>
               <td className="border border-slate-200 px-4 py-3 text-sm dark:border-zinc-700">
-                <Link href={`/message/${message.guid}`}>
-                  <span
-                    className={`inline-block px-3 py-1 rounded-full text-xs font-semibold ${getStatusColor(message.status)}`}
-                  >
-                    {message.status}
-                  </span>
-                </Link>
+                <span
+                  className={`inline-block px-3 py-1 rounded-full text-xs font-semibold ${getStatusColor(message.status)}`}
+                >
+                  {message.status}
+                </span>
               </td>
             </tr>
           ))}

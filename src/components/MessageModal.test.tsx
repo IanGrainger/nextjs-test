@@ -1,12 +1,15 @@
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MessageModal } from '@/components/MessageModal';
 
 // Mock next/navigation
+const mockBack = vi.fn();
+const mockPush = vi.fn();
 vi.mock('next/navigation', () => ({
   useRouter: () => ({
-    back: vi.fn(),
+    back: mockBack,
+    push: mockPush,
   }),
 }));
 
@@ -18,6 +21,11 @@ describe('MessageModal Component', () => {
     correspondentName: 'John Smith',
     status: 'delivered',
   };
+
+  beforeEach(() => {
+    mockBack.mockClear();
+    mockPush.mockClear();
+  });
 
   it('renders message details', () => {
     render(<MessageModal message={mockMessage} />);
@@ -40,6 +48,24 @@ describe('MessageModal Component', () => {
 
     const closeButton = screen.getByRole('button', { name: /close/i });
     expect(closeButton).toBeInTheDocument();
+  });
+
+  it('calls router.back() when closing an intercepted modal', async () => {
+    const user = userEvent.setup();
+    render(<MessageModal message={mockMessage} isIntercepted={true} />);
+
+    const closeButton = screen.getByRole('button', { name: /close/i });
+    await user.click(closeButton);
+    expect(mockBack).toHaveBeenCalled();
+  });
+
+  it('calls router.push("/") when closing a direct modal', async () => {
+    const user = userEvent.setup();
+    render(<MessageModal message={mockMessage} isIntercepted={false} />);
+
+    const closeButton = screen.getByRole('button', { name: /close/i });
+    await user.click(closeButton);
+    expect(mockPush).toHaveBeenCalledWith('/');
   });
 
   it('renders modal with correct labels', () => {
