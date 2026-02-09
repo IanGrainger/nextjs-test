@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach, vi, afterEach } from 'vitest';
+import { describe, it, expect, beforeEach, vi, afterEach, Mock } from 'vitest';
 import { render, screen, waitFor } from '@testing-library/react';
 import Home from '@/app/page';
 
@@ -12,7 +12,7 @@ describe('Home Page', () => {
   });
 
   it('renders the page heading', async () => {
-    (global.fetch as any).mockResolvedValueOnce({
+    (global.fetch as Mock).mockResolvedValueOnce({
       ok: true,
       json: async () => [],
     });
@@ -41,7 +41,7 @@ describe('Home Page', () => {
       },
     ];
 
-    (global.fetch as any).mockResolvedValueOnce({
+    (global.fetch as Mock).mockResolvedValueOnce({
       ok: true,
       json: async () => mockMessages,
     });
@@ -70,7 +70,7 @@ describe('Home Page', () => {
   });
 
   it('displays error message on fetch failure', async () => {
-    (global.fetch as any).mockResolvedValueOnce({
+    (global.fetch as Mock).mockResolvedValueOnce({
       ok: false,
     });
 
@@ -85,7 +85,7 @@ describe('Home Page', () => {
   });
 
   it('displays empty state when no messages', async () => {
-    (global.fetch as any).mockResolvedValueOnce({
+    (global.fetch as Mock).mockResolvedValueOnce({
       ok: true,
       json: async () => [],
     });
